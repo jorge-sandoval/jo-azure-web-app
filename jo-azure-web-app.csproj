@@ -1,10 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>jo_azure_web_app</RootNamespace>
+    <ApplicationInsightsResourceId>/subscriptions/e4117ff5-cbf7-4727-8f66-9fb23eccfbc5/resourceGroups/JorgeNetDev/providers/microsoft.insights/components/jo-web-app-actions</ApplicationInsightsResourceId>
+    <UserSecretsId>43a2b96a-2c7c-4b65-8788-e79c051db24b</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
+  </ItemGroup>
 
 </Project>
