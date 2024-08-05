@@ -1,0 +1,36 @@
+﻿@page
+@model jo_azure_web_app.Pages.Engineers.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Engineers</h2>
+<p>
+    <a asp-page="Upsert">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Country</th>
+            <th>Speciality</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var engineer in Model.Engineers)
+        {
+            <tr>
+                <td>@engineer.Name</td>
+                <td>@engineer.Country</td>
+                <td>@engineer.Speciality</td>
+                <td>
+                    <a asp-page="./Upsert" asp-route-id="@engineer.id">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@engineer.id">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@engineer.id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

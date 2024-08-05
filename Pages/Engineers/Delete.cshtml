@@ -1,0 +1,29 @@
+﻿@page
+@model jo_azure_web_app.Pages.Engineers.DeleteModel
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete Engineer</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+
+<form method="post">
+    <div class="form-group">
+        <input type="hidden" asp-for="Engineer.id" />
+        <label asp-for="Engineer.Name" class="control-label"></label>
+        <input asp-for="Engineer.Name" class="form-control" readonly />
+    </div>
+    <div class="form-group">
+        <label asp-for="Engineer.Country" class="control-label"></label>
+        <input asp-for="Engineer.Country" class="form-control" readonly />
+    </div>
+    <div class="form-group">
+        <label asp-for="Engineer.Speciality" class="control-label"></label>
+        <input asp-for="Engineer.Speciality" class="form-control" readonly />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a asp-page="./Index" class="btn btn-secondary">Back</a>
+    </div>
+</form>

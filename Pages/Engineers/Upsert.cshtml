@@ -1,0 +1,29 @@
+﻿@page
+@model jo_azure_web_app.Pages.Engineers.UpsertModel
+@{
+}
+<h2>@Model.PageTitle</h2>
+
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <input type="hidden" asp-for="Engineer.id" />
+        <label asp-for="Engineer.Name" class="control-label"></label>
+        <input asp-for="Engineer.Name" class="form-control" />
+        <span asp-validation-for="Engineer.Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Engineer.Country" class="control-label"></label>
+        <input asp-for="Engineer.Country" class="form-control" />
+        <span asp-validation-for="Engineer.Country" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Engineer.Speciality" class="control-label"></label>
+        <input asp-for="Engineer.Speciality" class="form-control" />
+        <span asp-validation-for="Engineer.Speciality" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="@Model.ButtonText" class="btn btn-primary" />
+        <a asp-page="./Index" class="btn btn-secondary">Back</a>
+    </div>
+</form>

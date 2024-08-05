@@ -1,0 +1,16 @@
+﻿@page
+@model jo_azure_web_app.Pages.Engineers.DetailsModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Engineer Details</h2>
+
+<div>
+    <p><strong>Name:</strong> @Model.Engineer.Name</p>
+    <p><strong>Country:</strong> @Model.Engineer.Country</p>
+    <p><strong>Speciality:</strong> @Model.Engineer.Speciality</p>
+</div>
+
+<a asp-page="./Upsert" asp-route-id="@Model.Engineer.id" class="btn btn-primary">Edit</a>
+<a asp-page="./Index" class="btn btn-secondary">Back</a>
