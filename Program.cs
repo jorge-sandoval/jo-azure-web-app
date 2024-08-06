@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services
+    .AddControllersWithViews()
+    .AddRazorRuntimeCompilation();
 
 var connectionString = builder.Configuration.GetConnectionString("AzureSqlConnection");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
@@ -35,4 +38,8 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+    
 app.Run();

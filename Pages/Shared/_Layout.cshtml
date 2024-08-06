@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@{
+    bool showDeploymentSlots = Configuration.GetValue<bool>("NavigationSettings:ShowDeploymentSlots");
+    bool showPrivacy = Configuration.GetValue<bool>("NavigationSettings:ShowPrivacy");
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -22,14 +30,31 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-page="/Index">Home</a>
                         </li>
+                        @if (showDeploymentSlots)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-page="/DeploymentSlots">Deployment Slots</a>
+                            </li>
+                        }
+                        @if (showPrivacy)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-page="/Privacy">Privacy</a>
+                            </li>
+                        }
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-page="/DeploymentSlots">Deployment Slots</a>
+                            <a class="nav-link text-white" asp-area="" asp-page="/Persons/Index">AzureSQL</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-page="/Persons/Index">Persons - EF Core</a>
+                            <a class="nav-link text-white" asp-area="" asp-page="/Engineers/Index">CosmosDB</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-page="/Engineers/Index">Engineers - CosmosDB</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="storageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Azure Storage Accounts
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="storageDropdown">
+                                <li><a class="dropdown-item" asp-controller="Storage" asp-action="BlobStorage">Blob Storage</a></li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
