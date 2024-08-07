@@ -4,5 +4,6 @@
     {
         public ContainerSettings Containers { get; set; }
         public TableSettings Tables { get; set; }
+        public QueueSettings Queues { get; set; }
     }
 }

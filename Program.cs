@@ -24,6 +24,7 @@ builder.Services.Configure<AzureStorageSettings>(
 builder.Services.AddScoped<IEngineerService, EngineerService>();
 builder.Services.AddScoped<IAttendeesService, AttendeesService>();
 builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
+builder.Services.AddScoped<IQueueService, QueueService>();
 
 builder.Services.AddRazorPages();
 builder.Services.AddApplicationInsightsTelemetry(new Microsoft.ApplicationInsights.AspNetCore.Extensions.ApplicationInsightsServiceOptions

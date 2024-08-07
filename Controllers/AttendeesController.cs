@@ -10,18 +10,24 @@ namespace jo_azure_web_app.Controllers
     public class AttendeesController : Controller
     {
         private readonly string _imagesContainerName;
+        private readonly string _attendeesEmailsQueueName;
         private readonly IAttendeesService _attendeesService;
         private readonly IBlobStorageService _blobStorageService;
+        private readonly IQueueService _queueService;
+        private readonly ILogger _logger;
 
         public AttendeesController(
             IOptions<AzureStorageSettings> storageOptions,
             IAttendeesService attendeesService,
-            IBlobStorageService blobStorageService
+            IBlobStorageService blobStorageService,
+            IQueueService queueService
         )
         {
             _imagesContainerName = storageOptions.Value.Containers.AttendeesImagesContainerName;
+            _attendeesEmailsQueueName = storageOptions.Value.Queues.AttendeesEmailsQueueName;
             _attendeesService = attendeesService;
             _blobStorageService = blobStorageService;
+            _queueService = queueService;
         }
 
         public async Task<ActionResult> Index()
@@ -75,6 +81,18 @@ namespace jo_azure_web_app.Controllers
 
                 await _attendeesService.UpsertAtrendee(attendee);
 
+                var email = new EmailMessage()
+                {
+                    EmailAddress = attendee.EmailAddress,
+                    TimeStamp = DateTime.UtcNow,
+                    Subject = "Registration Successfull",
+                    Mesagge = $"Hello {attendee.FirstName}," +
+                                "\n\r Thank you for registering for this event." +
+                                "\n\r Your Record has been saved for your future reference."
+                };
+
+                await _queueService.SendEmailAsync(_attendeesEmailsQueueName, email);
+
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -103,6 +121,17 @@ namespace jo_azure_web_app.Controllers
                 }
 
                 await _attendeesService.UpsertAtrendee(attendee);
+
+                var email = new EmailMessage()
+                {
+                    EmailAddress = attendee.EmailAddress,
+                    TimeStamp = DateTime.UtcNow,
+                    Subject = "Registration Update",
+                    Mesagge = $"Hello {attendee.FirstName}," +
+                                "\n\r Your Record has been modified successfully."
+                };
+
+                await _queueService.SendEmailAsync(_attendeesEmailsQueueName, email);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -133,6 +162,18 @@ namespace jo_azure_web_app.Controllers
                 var attendee = await _attendeesService.GetAttendee(industry, id);
                 await _attendeesService.DeleteAtrendee(industry, id);
                 await _blobStorageService.DeleteBlobAsync(_imagesContainerName, attendee.ImageName);
+
+                var email = new EmailMessage()
+                {
+                    EmailAddress = attendee.EmailAddress,
+                    TimeStamp = DateTime.UtcNow,
+                    Subject = "Registration Cancelled",
+                    Mesagge = $"Hello {attendee.FirstName}," +
+                                "\n\r Your Record has been removed successfully."
+                };
+
+                await _queueService.SendEmailAsync(_attendeesEmailsQueueName, email);
+
                 return RedirectToAction(nameof(Index));
             }
             catch
