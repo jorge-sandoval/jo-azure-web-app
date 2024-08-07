@@ -1,22 +1,29 @@
 ﻿using Azure;
 using Azure.Data.Tables;
 using jo_azure_web_app.Data;
+using jo_azure_web_app.Data.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace jo_azure_web_app.Services
 {
     public class AttendeesService : IAttendeesService
     {
-        private const string _tableName = "Attendees";
+        private readonly string _tableName;
         private readonly TableClient _tableClient;
 
-        public AttendeesService(IConfiguration configuration)
+        public AttendeesService(
+            IOptions<AzureStorageSettings> storageOptions,
+            IOptions<ConnectionStringsSettings> connectionStringOptions
+        )
         {
-            _tableClient = GetTableClient(configuration);
+            _tableName = storageOptions.Value.Tables.AttendeesTableName;
+
+            var connectionString = connectionStringOptions.Value.AzureStorageConnection;
+            _tableClient = GetTableClient(connectionString);
         }
 
-        private TableClient GetTableClient(IConfiguration configuration)
+        private TableClient GetTableClient(string connectionString)
         {
-            var connectionString = configuration.GetConnectionString("AzureStorageConnection");
             var tableServiceClient = new TableServiceClient(connectionString);
 
             var tableClient = tableServiceClient.GetTableClient(_tableName);

@@ -1,4 +1,5 @@
 using jo_azure_web_app.Data;
+using jo_azure_web_app.Data.Configuration;
 using jo_azure_web_app.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,14 @@ builder.Services
 
 var connectionString = builder.Configuration.GetConnectionString("AzureSqlConnection");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
+
+builder.Services.Configure<ConnectionStringsSettings>(
+    builder.Configuration.GetSection("ConnectionStrings")
+);
+
+builder.Services.Configure<AzureStorageSettings>(
+    builder.Configuration.GetSection("AzureStorage")
+);
 
 builder.Services.AddScoped<IEngineerService, EngineerService>();
 builder.Services.AddScoped<IAttendeesService, AttendeesService>();
