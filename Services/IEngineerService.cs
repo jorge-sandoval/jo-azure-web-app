@@ -1,5 +1,6 @@
-﻿
-namespace jo_azure_web_app.Data
+﻿using jo_azure_web_app.Data;
+
+namespace jo_azure_web_app.Services
 {
     public interface IEngineerService
     {

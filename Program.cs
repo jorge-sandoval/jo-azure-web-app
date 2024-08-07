@@ -1,4 +1,5 @@
 using jo_azure_web_app.Data;
+using jo_azure_web_app.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,7 @@ var connectionString = builder.Configuration.GetConnectionString("AzureSqlConnec
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddScoped<IEngineerService, EngineerService>();
+builder.Services.AddScoped<IAttendeesService, AttendeesService>();
 
 builder.Services.AddRazorPages();
 builder.Services.AddApplicationInsightsTelemetry(new Microsoft.ApplicationInsights.AspNetCore.Extensions.ApplicationInsightsServiceOptions

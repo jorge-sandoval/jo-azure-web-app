@@ -1,6 +1,7 @@
-﻿using Microsoft.Azure.Cosmos;
+﻿using jo_azure_web_app.Data;
+using Microsoft.Azure.Cosmos;
 
-namespace jo_azure_web_app.Data
+namespace jo_azure_web_app.Services
 {
     public class EngineerService : IEngineerService
     {
