@@ -1,0 +1,48 @@
+﻿@model jo_azure_web_app.ViewModels.AttendeesQueueDashboardViewModel
+
+@{
+    ViewBag.Title = "Attendees Queue Dashboard";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p class="bg-light"><strong>Total Messages in Queue:</strong> @Model.TotalMessages</p>
+
+@if (Model.CurrentMessage != null)
+{
+    <div class="container mt-4 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="card-title">
+                    Current Message <br />
+                    <small> @Model.CurrentMessage.DequeueCount time(s) dequeued</small>
+                </h6>
+            </div>
+            <div class="card-body">
+                <p><strong>Email Address:</strong> @Model.EmailMessage.EmailAddress</p>
+                <p><strong>Subject:</strong> @Model.EmailMessage.Subject</p>
+                <p><strong>Message:</strong></p>
+                <pre class="bg-light p-2 rounded">@Model.EmailMessage.Message</pre>
+                <p><strong>TimeStamp:</strong> @Model.EmailMessage.TimeStamp</p>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <p>No current Message.</p>
+}
+
+<div class="d-flex gap-2">
+    <form asp-action="GetNextMessage" method="post">
+        <button type="submit" class="btn btn-primary">Get Next Message</button>
+    </form>
+    @if (Model.CurrentMessage != null)
+    {
+        <form asp-action="DeleteMessage" method="post" class="d-inline">
+            <input type="hidden" name="messageId" value="@Model.CurrentMessage.MessageId" />
+            <input type="hidden" name="popReceipt" value="@Model.CurrentMessage.PopReceipt" />
+            <button type="submit" class="btn btn-danger">Delete Message</button>
+        </form>
+    }
+</div>

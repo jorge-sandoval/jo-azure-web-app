@@ -86,12 +86,12 @@ namespace jo_azure_web_app.Controllers
                     EmailAddress = attendee.EmailAddress,
                     TimeStamp = DateTime.UtcNow,
                     Subject = "Registration Successfull",
-                    Mesagge = $"Hello {attendee.FirstName}," +
+                    Message = $"Hello {attendee.FirstName}," +
                                 "\n\r Thank you for registering for this event." +
                                 "\n\r Your Record has been saved for your future reference."
                 };
 
-                await _queueService.SendEmailAsync(_attendeesEmailsQueueName, email);
+                await _queueService.SendMessageAsync(_attendeesEmailsQueueName, email);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -127,11 +127,11 @@ namespace jo_azure_web_app.Controllers
                     EmailAddress = attendee.EmailAddress,
                     TimeStamp = DateTime.UtcNow,
                     Subject = "Registration Update",
-                    Mesagge = $"Hello {attendee.FirstName}," +
+                    Message = $"Hello {attendee.FirstName}," +
                                 "\n\r Your Record has been modified successfully."
                 };
 
-                await _queueService.SendEmailAsync(_attendeesEmailsQueueName, email);
+                await _queueService.SendMessageAsync(_attendeesEmailsQueueName, email);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -168,11 +168,11 @@ namespace jo_azure_web_app.Controllers
                     EmailAddress = attendee.EmailAddress,
                     TimeStamp = DateTime.UtcNow,
                     Subject = "Registration Cancelled",
-                    Mesagge = $"Hello {attendee.FirstName}," +
+                    Message = $"Hello {attendee.FirstName}," +
                                 "\n\r Your Record has been removed successfully."
                 };
 
-                await _queueService.SendEmailAsync(_attendeesEmailsQueueName, email);
+                await _queueService.SendMessageAsync(_attendeesEmailsQueueName, email);
 
                 return RedirectToAction(nameof(Index));
             }
